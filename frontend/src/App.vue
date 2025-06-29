@@ -5,7 +5,10 @@
     <h2 style="color: #555; margin-top: 20px;">Mood Feed</h2>
     <div v-for="entry in entries" :key="entry.timestamp" style="margin-bottom: 15px; padding: 10px; background-color: #fff; border-radius: 5px; border: 1px solid #ddd;">
       <p style="margin: 0; color: #444;">{{ entry.text }}</p>
-      <img v-if="entry.image" :src="`http://localhost:3000${entry.image}`" alt="Mood image" style="max-width: 100%; height: auto; margin-top: 10px; border-radius: 5px;" />
+      
+      <!-- === THIS LINE IS UPDATED === -->
+      <img v-if="entry.image" :src="`${process.env.VUE_APP_API_URL}${entry.image}`" alt="Mood image" style="max-width: 100%; height: auto; margin-top: 10px; border-radius: 5px;" />
+      
       <small style="color: #777; display: block; margin-top: 5px;">{{ entry.timestamp }}</small>
     </div>
   </div>
@@ -13,7 +16,6 @@
 
 <script>
 import MoodForm from './components/MoodForm.vue';
-// Removed MoodFeed from components since it's not used
 import axios from 'axios';
 
 export default {
@@ -28,7 +30,8 @@ export default {
   methods: {
     async fetchFeed() {
       try {
-        const response = await axios.get('http://localhost:3000/feed');
+        // === THIS LINE IS UPDATED ===
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/feed`);
         this.entries = response.data;
       } catch (error) {
         console.error('Error fetching feed:', error);

@@ -14,7 +14,31 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 // Middleware
-app.use(cors());
+
+// === START OF CORS CONFIGURATION ===
+
+// Define the list of websites that are allowed to make requests to this server
+const allowedOrigins = [
+  'http://localhost:8080', // For local development
+  'https://moodboard-deploy-frontend.onrender.com' // Your deployed frontend URL
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests from the whitelist, and also non-browser requests (like from curl or Postman)
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
+// Use the new CORS options
+app.use(cors(corsOptions));
+
+// === END OF CORS CONFIGURATION ===
+
 app.use(fileUpload());
 app.use(express.json());
 

@@ -27,7 +27,8 @@ export default {
         formData.append('image', this.file);
       }
       try {
-        await axios.post('http://localhost:3000/post', formData, {
+        // === THIS IS THE UPDATED LINE ===
+        await axios.post(`${process.env.VUE_APP_API_URL}/post`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
