@@ -20,7 +20,7 @@ if (!fs.existsSync(uploadDir)) {
 // Define the list of websites that are allowed to make requests to this server
 const allowedOrigins = [
   'http://localhost:8080', // For local development
-  'https://moodboard-deploy-backend.onrender.com' // Your deployed frontend URL
+  'https://moodboard-deploy-frontend.onrender.com' // Your deployed frontend URL
 ];
 
 const corsOptions = {
